@@ -4,6 +4,7 @@ function Todos() {
   const [text, setText] = useState('')
   const [todos, setTodos] = useState([])
   const itemsLeft = todos.filter((todo) => !todo.completed).length
+  const completedTodos = todos.filter((todo) => todo.completed).length
 
 function handleSubmit(e) {
   e.preventDefault()
@@ -26,6 +27,10 @@ function handleToggle(id) {
 
 function handleDelete(id) {
   setTodos(todos.filter((todo) => todo.id !== id))
+}
+
+function handleClearCompleted() {
+  setTodos(todos.filter((todo) => !todo.completed))
 }
 
   return (
@@ -119,9 +124,11 @@ function handleDelete(id) {
                   </button>
                 </li>
               </ul>
-            <button type="button" className="cursor-pointer justify-self-end hover:underline">
-              Clear completed
-            </button>
+            {completedTodos > 0 && (
+              <button type="button" className="cursor-pointer justify-self-end hover:underline" onClick={handleClearCompleted}>
+                Clear completed
+              </button>
+            )}
           </footer>
         </>
       )}
